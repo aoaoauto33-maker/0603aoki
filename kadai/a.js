@@ -40,6 +40,15 @@ rl.question("投入金額を入力してください：",(answer) => {
     rl.question("購入したい商品を選択してください",(answer2) =>{
         console.log(`選択した商品:${answer2}`);
 
+        // <購入判定>
+        if(drink[answer2] <= money){
+            console.log("購入できました！");
+            // <おつりの表示>
+            const change = money - drink[answer2];
+            console.log(`おつり：${change}`);
+        }else{
+            console.log("お金が足りません");
+        }
 
      rl.close();
     // readline.createInterface()でInterfaceを作る→使い終わったらrl.close()する
