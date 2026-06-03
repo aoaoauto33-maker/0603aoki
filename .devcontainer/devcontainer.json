@@ -1,0 +1,17 @@
+{
+    "name": "JavaScript研修",
+    "build":{
+        "dockerfile": "Dockerfile"
+    },
+    "customizations":{
+        "vscode":{
+            "extensions":[
+                "dbaeumer.vscode-eslint",
+                "esbenp.prettier-vscode",
+                "christian-kohlder.path-intellisense",
+                "formulahendry.code-runner"
+            ]
+            }
+        },
+        "remoteUser":"node"
+}
