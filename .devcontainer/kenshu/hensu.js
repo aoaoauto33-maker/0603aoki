@@ -19,19 +19,19 @@
 
 
 
-// falsyとtruthy
-let a = 0;
-console.log(Boolean(a));
-let b = '';
-console.log(Boolean(b));
-let c = 0n;
-console.log(Boolean(c));
-let d = null;
-console.log(Boolean(d));
-let e = parseInt("");
-console.log(Boolean(e));
-let f;
-console.log(Boolean(f));
+// // falsyとtruthy
+// let a = 0;
+// console.log(Boolean(a));
+// let b = '';
+// console.log(Boolean(b));
+// let c = 0n;
+// console.log(Boolean(c));
+// let d = null;
+// console.log(Boolean(d));
+// let e = parseInt("");
+// console.log(Boolean(e));
+// let f;
+// console.log(Boolean(f));
 
 
 
@@ -78,32 +78,142 @@ console.log(Boolean(f));
 
 
 
-// コールバック関数とthis
-window.name = 'Bob';
-const person = {
-    name: 'TOM',
+// // コールバック関数とthis
+// window.name = 'Bob';
+// const person = {
+//     name: 'TOM',
+//     hello: function(){
+//         console.log('Hello' + this.name);
+//     }
+// }
+// function fn(callback){
+//     callback();
+// }
+// fn(person.hello);
+
+
+
+
+// // bindとthis(むずい)
+// // bindはthisの参照先を変えてくれる
+// window.name='Bob';
+// const person = {
+//     name: 'Tom',
+//     hello: function(){
+//         console.log('Hello' + this.name);
+//     }
+//     // ↑これはメソッド(オブジェクトの中の関数はメソッドという)
+// }
+// const helloTom = person.hello.bind(person);
+// // bindを使ってpersonを使ってください
+// // bindにはオブジェクトを入れる
+// function fn(callback){
+//     callback();
+// }
+// fn(helloTom);
+
+
+// function a() {
+//     console.log('Hello ' + this.name);
+// }
+// const b = a.bind({name: 'Tim'});
+// // bindメソッドを使うとbは関数扱いになる(関数を入れているので)
+// b();
+// //「Hello Tim」と出力される
+
+
+
+// call,apply
+const tim= {name: 'Tim'}
+function a(){
+    console.log('Hello' + this.name);
+}
+const b = a.bind(tim);
+b();
+a.call(tim);
+a.apply(tim);
+
+
+// call
+const tim = {name:'Tim'}
+function a(name){
+    console.log('Hello' + name);
+}
+a.call(tim, 'Tom');
+// callの第二引数は実引数を固定
+
+
+// apply
+const tim = {name: 'Tim'}
+function a(name1,name2){
+    console.log('Hello' + name1 + ',' + name2);
+}
+a.apply(tim,['Tom','Bob']);
+
+
+
+// まとめ
+window.name= 'Bob';
+const person ={
+    name:'Tom',
     hello: function(){
         console.log('Hello' + this.name);
     }
 }
-function fn(callback){
-    callback();
+person.hello();
+
+const hello = person.hello;
+hello();
+
+const helloTom = person.hello.bind(person);
+helloTom();
+
+person.hello.call(person);
+person.hello.apply(person);
+
+
+
+// アロー関数とthis
+window.name = 'Bob';
+const person ={
+    name:'Tom',
+    hello:function(){
+        console.log('Hello' + this.name);
+    },
+    hi:() => {
+        console.log('Hello' + this.name);
+    }
 }
-fn(person.hello);
+person.hello();
+// Hello Tomと出力される
+person.hi();
+// Hello Bobと出力される
+// アロー関数はメソッドにはならない
 
 
 
 
-// bindとthis(むずい)
-window.name='Bob';
+window.name= 'Bob';
+const a = () => console.log('Bye' + this.name);
+const person = {
+    name:'Tom',
+    hello(){
+        console.log('Hello' + this.name);
+        a();
+    }
+}
+person.hello();
+
+
+
+window.name= 'Bob';
 const person = {
     name: 'Tom',
-    hello: function(){
+    hello() {
         console.log('Hello' + this.name);
+        const a = () =>nconsole.log('Bye' + this.name);
+        a();
     }
+    // アロー関数が無名関数(メソッド)の中に入ってたら参照先はメソッドに従う
 }
-const helloTom = person.hello.bind(person);
-function fn(callback){
-    callback();
-}
-fn(helloTom);
+person.hello();
