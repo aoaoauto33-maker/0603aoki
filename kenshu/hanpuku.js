@@ -1,4 +1,13 @@
+// インクリメント
 // i++と++iの違いは何？(土日に調べておいてね)
+
+let i = 0;
+console.log(i++);
+
+let ii = 0;
+console.log(++ii);
+
+
 
 // const array = [1,2,3,4,5];
 // for(i=0; i < array.length; i++){
