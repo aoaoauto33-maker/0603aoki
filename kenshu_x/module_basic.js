@@ -1,4 +1,4 @@
-import{ Article, getTriangle as gtri } from './app.js';
+import{ Article, getTriangle as gtri } from '../kenshu/app.js';
 
 // import * as App from './App.js';でも使える
 
