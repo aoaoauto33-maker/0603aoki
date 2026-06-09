@@ -1,3 +1,5 @@
+// ↓６月８日
+
 // function sleep(ms){
 //     const startTime = new Date();
 //     while(new Date() - startTime < ms);
@@ -245,18 +247,93 @@
 // // その後sleep(3)に戻ってくる
 
 
+// ↓６月９日
 
 
-// allSetteled
+// // allSetteled(わからん)
+// function sleep(val){
+//     return new Promise(function(resolve, reject){
+//         setTimeout(function(){
+//             console.log(val++);
+//             resolve(val);
+//         }, val * 500);
+//     })
+// }
+// Promise.allSettled([sleep(2), sleep(3), sleep(4)]).then(function(data){
+//     console.log('--- allSettled ---');
+//     console.log(data);
+// })
+
+
+
+
+
+// // <MacrotasksとMicrotasks part1>
+// setTimeout(function task1(){
+//     console.log('task1');
+// });
+
+// new Promise(function promise(resolve){
+//     console.log('promise');
+//     resolve();
+// }).then(function job1(){
+//     console.log('job1');
+// });
+// console.log('global end');
+// // なんでtask1よりjob1が早いの？？？？？？？？？
+// // →マクロ(setTimeout)よりマイクロ(Promise)が優先されるから
+
+
+
+
+
+
+// // <MacrotasksとMicrotasks part2>
+// new Promise(function promise(resolve){
+//     console.log('promise');
+
+//     setTimeout(function task1(){
+//         console.log('task1');
+//         resolve();
+//     });
+// }).then(function job1(){
+//     console.log('job1');
+//     setTimeout(function task2(){
+//         console.log('task2');
+//     });
+
+//     queueMicrotask(function job4(){
+//         console.log('job4');
+//     });
+// }).then(function job2(){
+//     console.log('job2');
+// }).then(function job3(){
+//     console.log('job3');
+// });
+// console.log('global end');
+
+
+
+
+
+
+
+
+// <AsyncとAwait>(わからん)
 function sleep(val){
-    return new Promise(function(resolve, reject){
+    return new Promise(function(resolve){
         setTimeout(function(){
             console.log(val++);
             resolve(val);
-        }, val * 500);
-    })
+        }, 1000);
+    });
 }
-Promise.allSettled([sleep(2), sleep(3), sleep(4)]).then(function(data){
-    console.log('--- allSettled ---');
-    console.log(data);
-})
+async function init(){
+    // async=非同期の関数を実行するよー
+    let val = await sleep(0);
+    // .thenではなく、この書き方をする、resolve(val)のvalと一緒
+    // awaitは非同期処理を同期処理かのように扱う、止める
+    // 関数の前にawaitがついていたらasync
+    console.log(val);
+}
+init();
