@@ -78,7 +78,7 @@
 // function sleep(callback){
 //     setTimeout(function(){
 //         console.log('hello');
-//         callback()
+//         callback();
 //     }, 3000);
 // }
 // sleep(function(){
@@ -171,6 +171,7 @@
 
 
 // // throw(エラーを投げる)
+// // resolveの途中でcatchに渡したいときに使うもの
 // new Promise(function(resolve, reject){
 //     console.log('promise');
 //     resolve();
@@ -209,7 +210,6 @@
 
 
 
-
 // //Promiseと並列処理
 // function sleep(val){
 //     return new Promise(function(resolve){
@@ -229,17 +229,34 @@
 
 
 
-// Promise.race
+// // Promise.race
+// function sleep(val){
+//     return new Promise(function(resolve){
+//         setTimeout(function(){
+//             console.log(val++);
+//             resolve(val);
+//         }, val * 500);
+//     })
+// }
+// Promise.race([sleep(2), sleep(3), sleep(4)]).then(function(data){
+//     console.log(data);
+// })
+// // .raceは一回処理が終わったらconsole.log(data);を実行する
+// // その後sleep(3)に戻ってくる
+
+
+
+
+// allSetteled
 function sleep(val){
-    return new Promise(function(resolve){
+    return new Promise(function(resolve, reject){
         setTimeout(function(){
             console.log(val++);
             resolve(val);
         }, val * 500);
     })
 }
-Promise.race([sleep(2), sleep(3), sleep(4)]).then(function(data){
+Promise.allSettled([sleep(2), sleep(3), sleep(4)]).then(function(data){
+    console.log('--- allSettled ---');
     console.log(data);
 })
-// .raceは一回処理が終わったらconsole.log(data);を実行する
-// その後sleep(3)に戻ってくる
