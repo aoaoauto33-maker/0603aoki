@@ -45,13 +45,14 @@
 //         console.log('task1 done');
 //     }, 4000);
 //     const startTime = new Date();
+//     // new Date();は現在時刻
 //     while(new Date() - startTime < 5000);
+//     // ループするごとに現在時刻を取得していて、そこから最初に取得したスタート時間を引いている
 //     console.log('fn a done');
 // }
 // // 同期処理で画面の出力を握ってるから同期処理が終わってからじゃないと非同期が処理されない
 
 // a();
-
 
 
 
@@ -227,6 +228,7 @@
 // // .all＝全て同時に実行する
 // // 同時に実行されているが、val*500なため時差があるように見えるだけ
 // // CPUのコア数に従って同時に実行してくれる並列数が決まる(CPUがjsを実行してくれるので)
+// // Promiseは即実行されちゃう(謎)から呼び出してから実行したいなあ関数の中に入れるとよき
 
 
 
@@ -243,8 +245,9 @@
 // Promise.race([sleep(2), sleep(3), sleep(4)]).then(function(data){
 //     console.log(data);
 // })
-// // .raceは一回処理が終わったらconsole.log(data);を実行する
+// // .raceは一回処理が終わったらresolve()を実行させちゃうのでをconsole.log(data)が出力される
 // // その後sleep(3)に戻ってくる
+
 
 
 // ↓６月９日
@@ -305,13 +308,13 @@
 //     queueMicrotask(function job4(){
 //         console.log('job4');
 //     });
+//     // マイクロタスクにタスクを入れる
 // }).then(function job2(){
 //     console.log('job2');
 // }).then(function job3(){
 //     console.log('job3');
 // });
 // console.log('global end');
-
 
 
 
@@ -329,11 +332,13 @@ function sleep(val){
     });
 }
 async function init(){
-    // async=非同期の関数を実行するよー
+    // async=非同期の関数を実行するよ〜
     let val = await sleep(0);
     // .thenではなく、この書き方をする、resolve(val)のvalと一緒
     // awaitは非同期処理を同期処理かのように扱う、止める
     // 関数の前にawaitがついていたらasync
     console.log(val);
+    // awaitをつけないとすぐにconsole.log(val)が実行されてしまうが、
+    // sleep(0)の実行が後回しにされるとvalの値がわからないため、awaitが必要
 }
 init();
